@@ -4,6 +4,7 @@
     {
         private string name;
         private List<Objective> objectives = new List<Objective>();
+        private bool isTurnedIn = false;
 
         public Quest(string name)
         {
@@ -15,7 +16,8 @@
             get
             {
                 return objectives.Count > 0 &&
-                       objectives.All(objective => objective.IsCompleted);
+                       objectives.All(objective => objective.IsCompleted) &&
+                       isTurnedIn;
             }
         }
 
@@ -48,6 +50,11 @@
 
             Objective objective = GetObjective(name);
             objective.Progress(amount);
+        }
+
+        public void TurnIn()
+        {
+            isTurnedIn = true;
         }
     }
 }
