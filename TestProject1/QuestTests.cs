@@ -82,3 +82,21 @@ namespace TestProject
         }
     }
 }
+
+/*
+Why did the tests fail?
+the test was failed because requirement was changed. Using only Objective doesn't complete quest, and needed turn in
+
+
+Did the implementation need to change?
+I added a private field to track whether the quest was turned in, added a TurnIn() method, and updated IsCompleted.
+
+
+Did the tests need to change?
+The old test expected using only completing object, so I added Turn in method and added Iscompleted
+
+How do real software teams handle requirement changes like this?
+ software teams update both the code and the tests,so they match the new requirements.
+
+
+*/
