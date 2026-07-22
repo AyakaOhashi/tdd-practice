@@ -2,28 +2,52 @@
 {
     public class Quest
     {
-        private string v;
+        private string name;
+        private List<Objective> objectives = new List<Objective>();
 
-        public Quest(string v)
+        public Quest(string name)
         {
-            this.v = v;
+            this.name = name;
         }
 
-        public bool IsCompleted { get; set; }
-
-        public void AddObjective(string v1, int v2)
+        public bool IsCompleted
         {
-            throw new NotImplementedException();
+            get
+            {
+                return objectives.Count > 0 &&
+                       objectives.All(objective => objective.IsCompleted);
+            }
         }
 
-        public Objective GetObjective(string v)
+        public void AddObjective(string name, int requiredAmount)
         {
-            throw new NotImplementedException();
+            Objective objective = new Objective(name, requiredAmount);
+            objectives.Add(objective);
         }
 
-        public void ProgressObjective(string v1, int v2)
+        public Objective GetObjective(string name)
         {
-            throw new NotImplementedException();
+            Objective objective = objectives.FirstOrDefault(
+                objective => objective.Name == name
+            );
+
+            if (objective == null)
+            {
+                throw new Exception("Objective not found.");
+            }
+
+            return objective;
+        }
+
+        public void ProgressObjective(string name, int amount)
+        {
+            if (amount < 0)
+            {
+                throw new Exception("Progress cannot be negative.");
+            }
+
+            Objective objective = GetObjective(name);
+            objective.Progress(amount);
         }
     }
 }
