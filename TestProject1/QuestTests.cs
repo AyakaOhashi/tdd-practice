@@ -30,14 +30,15 @@ namespace TestProject
         }
 
         [Fact]
+    
         public void Progress_Cannot_Exceed_Required_Amount()
         {
-            //Arrange
+            // Arrange
             var quest = CreateQuest();
-            //Act
-            quest.ProgressObjective("Kill Goblins", 10);
-            //Assert
-            Assert.Equal(5, quest.GetObjective("Kill Goblins").CurrentAmount);
+
+            // Act and Assert
+            Assert.Throws<InvalidOperationException>(() =>
+                quest.ProgressObjective("Kill Goblins", 10));
         }
 
         [Fact]
@@ -80,23 +81,18 @@ namespace TestProject
             // Assert
             Assert.False(quest.IsCompleted);
         }
+
+        [Fact]
+        public void Progress_Throws_Exception_If_Too_Much()
+        {
+            var quest = new Quest("Goblin Slayer");
+            quest.AddObjective("Kill Goblins", 5);
+
+            Assert.Throws<InvalidOperationException>(() =>
+                quest.ProgressObjective("Kill Goblins", 6));
+        }
+        
     }
 }
 
-/*
-Why did the tests fail?
-the test was failed because requirement was changed. Using only Objective doesn't complete quest, and needed turn in
 
-
-Did the implementation need to change?
-I added a private field to track whether the quest was turned in, added a TurnIn() method, and updated IsCompleted.
-
-
-Did the tests need to change?
-The old test expected using only completing object, so I added Turn in method and added Iscompleted
-
-How do real software teams handle requirement changes like this?
- software teams update both the code and the tests,so they match the new requirements.
-
-
-*/

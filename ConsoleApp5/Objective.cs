@@ -20,12 +20,13 @@
                 throw new Exception("Progress cannot be negative.");
             }
 
-            CurrentAmount += amount;
-
-            if (CurrentAmount > RequiredAmount)
+            if (CurrentAmount + amount > RequiredAmount)
             {
-                CurrentAmount = RequiredAmount;
+                throw new InvalidOperationException(
+                    "Progress cannot exceed the required amount.");
             }
+
+CurrentAmount += amount;
         }
 
         public bool IsCompleted
